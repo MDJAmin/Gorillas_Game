@@ -15,3 +15,54 @@ body {
   height: 100%;
   overflow: hidden;
 }
+
+
+button {
+  cursor: pointer;
+  border: none;
+  color: white;
+  background: transparent;
+  font-family: "Inconsolata", monospace;
+  padding: 10px;
+  font-size: 1em;
+}
+
+button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#info-left,
+#info-right {
+  position: absolute;
+  top: 20px;
+}
+
+#info-left {
+  left: 25px;
+}
+
+#info-right {
+  right: 25px;
+  text-align: right;
+}
+
+#bomb-grab-area {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: grab;
+}
+
+#instructions,
+#congratulations {
+  position: absolute;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+@media (min-height: 535px) {
+  #instructions {
+    min-height: 200px;
+  }
+}
