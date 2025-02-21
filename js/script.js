@@ -84,3 +84,78 @@ colorModeButtonDOM.addEventListener("click", () => {
 
 newGame();
 
+
+function newGame() {
+  // Reset game state
+  state = {
+    phase: "aiming", // aiming | in flight | celebrating
+    currentPlayer: 1,
+    round: 1,
+    windSpeed: generateWindSpeed(),
+    bomb: {
+      x: undefined,
+      y: undefined,
+      rotation: 0,
+      velocity: { x: 0, y: 0 },
+      highlight: true,
+    },
+
+    // Buildings
+    backgroundBuildings: [],
+    buildings: [],
+    blastHoles: [],
+
+    stars: [],
+
+    scale: 1,
+    shift: 0,
+  };
+
+  // Generate stars
+  for (let i = 0; i < (window.innerWidth * window.innerHeight) / 12000; i++) {
+    const x = Math.floor(Math.random() * window.innerWidth);
+    const y = Math.floor(Math.random() * window.innerHeight);
+    state.stars.push({ x, y });
+  }
+
+  // Generate background buildings
+  for (let i = 0; i < 17; i++) {
+    generateBackgroundBuilding(i);
+  }
+
+  // Generate buildings
+  for (let i = 0; i < 8; i++) {
+    generateBuilding(i);
+  }
+
+  calculateScaleAndShift();
+  initializeBombPosition();
+  initializeWindmillPosition();
+  setWindMillRotation();
+
+  // Cancel any ongoing animation and timeout
+  cancelAnimationFrame(animationFrameRequestID);
+  clearTimeout(delayTimeoutID);
+
+  // Reset HTML elements
+  if (settings.numberOfPlayers > 0) {
+    showInstructions();
+  } else {
+    hideInstructions();
+  }
+  hideCongratulations();
+  angle1DOM.innerText = 0;
+  velocity1DOM.innerText = 0;
+  angle2DOM.innerText = 0;
+  velocity2DOM.innerText = 0;
+
+  // Reset simulation mode
+  simulationMode = false;
+  simulationImpact = {};
+
+  draw();
+
+  if (settings.numberOfPlayers === 0) {
+    computerThrow();
+  }
+}
