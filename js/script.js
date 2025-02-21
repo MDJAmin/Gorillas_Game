@@ -70,3 +70,17 @@ const twoPlayersButtonDOM = document.querySelectorAll(".two-players");
 const autoPlayButtonDOM = document.querySelectorAll(".auto-play");
 const colorModeButtonDOM = document.querySelector("#color-mode");
 
+
+colorModeButtonDOM.addEventListener("click", () => {
+  if (settings.mode === "dark") {
+    settings.mode = "light";
+    colorModeButtonDOM.innerText = "Dark Mode";
+  } else {
+    settings.mode = "dark";
+    colorModeButtonDOM.innerText = "Light Mode";
+  }
+  draw();
+});
+
+newGame();
+
