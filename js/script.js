@@ -181,3 +181,27 @@ function hideCongratulations() {
   congratulationsDOM.style.opacity = 0;
   congratulationsDOM.style.visibility = "hidden";
 }
+
+function generateBackgroundBuilding(index) {
+  const previousBuilding = state.backgroundBuildings[index - 1];
+
+  const x = previousBuilding
+    ? previousBuilding.x + previousBuilding.width + 4
+    : -300;
+
+  const minWidth = 60;
+  const maxWidth = 110;
+  const width = minWidth + Math.random() * (maxWidth - minWidth);
+
+  const smallerBuilding = index < 4 || index >= 13;
+
+  const minHeight = 80;
+  const maxHeight = 350;
+  const smallMinHeight = 20;
+  const smallMaxHeight = 150;
+  const height = smallerBuilding
+    ? smallMinHeight + Math.random() * (smallMaxHeight - smallMinHeight)
+    : minHeight + Math.random() * (maxHeight - minHeight);
+
+  state.backgroundBuildings.push({ x, width, height });
+}
