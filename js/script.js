@@ -159,3 +159,25 @@ function newGame() {
     computerThrow();
   }
 }
+
+function showInstructions() {
+  singlePlayerButtonDOM.checked = true;
+  instructionsDOM.style.opacity = 1;
+  instructionsDOM.style.visibility = "visible";
+}
+
+function hideInstructions() {
+  state.bomb.highlight = false;
+  instructionsDOM.style.opacity = 0;
+  instructionsDOM.style.visibility = "hidden";
+}
+
+function showCongratulations() {
+  congratulationsDOM.style.opacity = 1;
+  congratulationsDOM.style.visibility = "visible";
+}
+
+function hideCongratulations() {
+  congratulationsDOM.style.opacity = 0;
+  congratulationsDOM.style.visibility = "hidden";
+}
