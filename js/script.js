@@ -254,3 +254,13 @@ function calculateScaleAndShift() {
     : 0;
 }
 
+window.addEventListener("resize", () => {
+  canvas.width = window.innerWidth * window.devicePixelRatio;
+  canvas.height = window.innerHeight * window.devicePixelRatio;
+  canvas.style.width = window.innerWidth + "px";
+  canvas.style.height = window.innerHeight + "px";
+  calculateScaleAndShift();
+  initializeBombPosition();
+  initializeWindmillPosition();
+  draw();
+});
