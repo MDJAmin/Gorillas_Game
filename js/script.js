@@ -264,3 +264,30 @@ window.addEventListener("resize", () => {
   initializeWindmillPosition();
   draw();
 });
+
+function initializeBombPosition() {
+  const building =
+    state.currentPlayer === 1
+      ? state.buildings.at(1) 
+      : state.buildings.at(-2); 
+      
+  const gorillaX = building.x + building.width / 2;
+  const gorillaY = building.height;
+
+  const gorillaHandOffsetX = state.currentPlayer === 1 ? -28 : 28;
+  const gorillaHandOffsetY = 107;
+
+  state.bomb.x = gorillaX + gorillaHandOffsetX;
+  state.bomb.y = gorillaY + gorillaHandOffsetY;
+  state.bomb.velocity.x = 0;
+  state.bomb.velocity.y = 0;
+  state.bomb.rotation = 0;
+
+  // Initialize the position of the grab area in HTML
+  const grabAreaRadius = 15;
+  const left = state.bomb.x * state.scale + state.shift - grabAreaRadius;
+  const bottom = state.bomb.y * state.scale - grabAreaRadius;
+
+  bombGrabAreaDOM.style.left = `${left}px`;
+  bombGrabAreaDOM.style.bottom = `${bottom}px`;
+}
