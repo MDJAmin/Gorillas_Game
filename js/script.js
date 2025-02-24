@@ -291,3 +291,19 @@ function initializeBombPosition() {
   bombGrabAreaDOM.style.left = `${left}px`;
   bombGrabAreaDOM.style.bottom = `${bottom}px`;
 }
+
+function initializeWindmillPosition() {
+  // Move windmill into position
+  const lastBuilding = state.buildings.at(-1);
+  let rooftopY = lastBuilding.height * state.scale;
+  let rooftopX =
+    (lastBuilding.x + lastBuilding.width / 2) * state.scale + state.shift;
+
+  windmillDOM.style.bottom = `${rooftopY}px`;
+  windmillDOM.style.left = `${rooftopX - 100}px`;
+
+  windmillDOM.style.scale = state.scale;
+
+  windInfoDOM.style.bottom = `${rooftopY}px`;
+  windInfoDOM.style.left = `${rooftopX - 50}px`;
+}
