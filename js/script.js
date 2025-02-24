@@ -88,7 +88,7 @@ newGame();
 function newGame() {
   // Reset game state
   state = {
-    phase: "aiming", // aiming | in flight | celebrating
+    phase: "aiming",
     currentPlayer: 1,
     round: 1,
     windSpeed: generateWindSpeed(),
@@ -111,7 +111,7 @@ function newGame() {
     shift: 0,
   };
 
-  // Generate stars
+  // Generate stars for night mood
   for (let i = 0; i < (window.innerWidth * window.innerHeight) / 12000; i++) {
     const x = Math.floor(Math.random() * window.innerWidth);
     const y = Math.floor(Math.random() * window.innerHeight);
@@ -237,3 +237,20 @@ function generateBuilding(index) {
 
   state.buildings.push({ x, width, height, lightsOn });
 }
+
+function calculateScaleAndShift() {
+  const lastBuilding = state.buildings.at(-1);
+  const totalWidthOfTheCity = lastBuilding.x + lastBuilding.width;
+
+  const horizontalScale = window.innerWidth / totalWidthOfTheCity ?? 1;
+  const verticalScale = window.innerHeight / 500;
+
+  state.scale = Math.min(horizontalScale, verticalScale);
+
+  const sceneNeedsToBeShifted = horizontalScale > verticalScale;
+
+  state.shift = sceneNeedsToBeShifted
+    ? (window.innerWidth - totalWidthOfTheCity * state.scale) / 2
+    : 0;
+}
+
