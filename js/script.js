@@ -335,3 +335,26 @@ function draw() {
   // Restore transformation
   ctx.restore();
 }
+
+function drawBackgroundSky() {
+  const gradient = ctx.createLinearGradient(0, 0, 0, window.innerHeight);
+  if (settings.mode === "dark") {
+    gradient.addColorStop(1, "#27507F");
+    gradient.addColorStop(0, "#58A8D8");
+  } else {
+    gradient.addColorStop(1, "#F8BA85");
+    gradient.addColorStop(0, "#FFC28E");
+  }
+
+  // Draw sky
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+  // Draw stars
+  if (settings.mode === "dark") {
+    ctx.fillStyle = "white";
+    state.stars.forEach((star) => {
+      ctx.fillRect(star.x, star.y, 1, 1);
+    });
+  }
+}
