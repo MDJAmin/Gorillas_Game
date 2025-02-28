@@ -358,3 +358,23 @@ function drawBackgroundSky() {
     });
   }
 }
+
+function drawBackgroundMoon() {
+  if (settings.mode === "dark") {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+    ctx.beginPath();
+    ctx.arc(
+      window.innerWidth / state.scale - state.shift - 200,
+      window.innerHeight / state.scale - 100,
+      30,
+      0,
+      2 * Math.PI
+    );
+    ctx.fill();
+  } else {
+    ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+    ctx.beginPath();
+    ctx.arc(300, 350, 60, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+}
