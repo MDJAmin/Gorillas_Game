@@ -386,3 +386,68 @@ function drawBackgroundBuildings() {
     ctx.fillRect(building.x, 0, building.width, building.height);
   });
 }
+
+
+function drawBuildingsWithBlastHoles() {
+  ctx.save();
+
+  state.blastHoles.forEach((blastHole) => {
+    ctx.beginPath();
+
+    // Outer shape clockwise
+    ctx.rect(
+      0,
+      0,
+      window.innerWidth / state.scale,
+      window.innerHeight / state.scale
+    );
+
+    // Inner shape counterclockwise
+    ctx.arc(blastHole.x, blastHole.y, blastHoleRadius, 0, 2 * Math.PI, true);
+
+    ctx.clip();
+  });
+
+  drawBuildings();
+
+  ctx.restore();
+}
+
+function drawBuildings() {
+  state.buildings.forEach((building) => {
+    // Draw building
+    ctx.fillStyle = settings.mode === "dark" ? "#152A47" : "#4A3C68";
+    ctx.fillRect(building.x, 0, building.width, building.height);
+
+    // Draw windows
+    const windowWidth = 10;
+    const windowHeight = 12;
+    const gap = 15;
+
+    const numberOfFloors = Math.ceil(
+      (building.height - gap) / (windowHeight + gap)
+    );
+    const numberOfRoomsPerFloor = Math.floor(
+      (building.width - gap) / (windowWidth + gap)
+    );
+
+    for (let floor = 0; floor < numberOfFloors; floor++) {
+      for (let room = 0; room < numberOfRoomsPerFloor; room++) {
+        if (building.lightsOn[floor * numberOfRoomsPerFloor + room]) {
+          ctx.save();
+
+          ctx.translate(building.x + gap, building.height - gap);
+          ctx.scale(1, -1);
+
+          const x = room * (windowWidth + gap);
+          const y = floor * (windowHeight + gap);
+
+          ctx.fillStyle = settings.mode === "dark" ? "#5F76AB" : "#EBB6A2";
+          ctx.fillRect(x, y, windowWidth, windowHeight);
+
+          ctx.restore();
+        }
+      }
+    }
+  });
+}
