@@ -307,3 +307,31 @@ function initializeWindmillPosition() {
   windInfoDOM.style.bottom = `${rooftopY}px`;
   windInfoDOM.style.left = `${rooftopX - 50}px`;
 }
+
+
+function draw() {
+  ctx.save();
+
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+  drawBackgroundSky();
+
+  // Flip coordinate system upside down
+  ctx.translate(0, window.innerHeight);
+  ctx.scale(1, -1);
+
+  // Scale and shift view to center
+  ctx.translate(state.shift, 0);
+  ctx.scale(state.scale, state.scale);
+
+  // Draw scene
+  drawBackgroundMoon();
+  drawBackgroundBuildings();
+  drawBuildingsWithBlastHoles();
+  drawGorilla(1);
+  drawGorilla(2);
+  drawBomb();
+
+  // Restore transformation
+  ctx.restore();
+}
