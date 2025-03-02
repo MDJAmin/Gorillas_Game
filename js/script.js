@@ -581,3 +581,34 @@ function drawGorillaFace(player) {
   }
   ctx.stroke();
 }
+
+function drawGorillaThoughtBubbles(player) {
+  if (state.phase === "aiming") {
+    const currentPlayerIsComputer =
+      (settings.numberOfPlayers === 0 &&
+        state.currentPlayer === 1 &&
+        player === 1) ||
+      (settings.numberOfPlayers !== 2 &&
+        state.currentPlayer === 2 &&
+        player === 2);
+
+    if (currentPlayerIsComputer) {
+      ctx.save();
+      ctx.scale(1, -1);
+
+      ctx.font = "20px sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("?", 0, -90);
+
+      ctx.font = "10px sans-serif";
+
+      ctx.rotate((5 / 180) * Math.PI);
+      ctx.fillText("?", 0, -90);
+
+      ctx.rotate((-10 / 180) * Math.PI);
+      ctx.fillText("?", 0, -90);
+
+      ctx.restore();
+    }
+  }
+}
