@@ -612,3 +612,75 @@ function drawGorillaThoughtBubbles(player) {
     }
   }
 }
+
+
+function drawBomb() {
+  ctx.save();
+  ctx.translate(state.bomb.x, state.bomb.y);
+
+  if (state.phase === "aiming") {
+    // Move the bomb with the mouse while aiming
+    ctx.translate(-state.bomb.velocity.x / 6.25, -state.bomb.velocity.y / 6.25);
+
+    // Draw throwing trajectory
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+    ctx.setLineDash([3, 8]);
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(state.bomb.velocity.x, state.bomb.velocity.y);
+    ctx.stroke();
+
+    // Draw circle
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.arc(0, 0, 6, 0, 2 * Math.PI);
+    ctx.fill();
+  } else if (state.phase === "in flight") {
+    // Draw rotated banana
+    ctx.fillStyle = "white";
+    ctx.rotate(state.bomb.rotation);
+    ctx.beginPath();
+    ctx.moveTo(-8, -2);
+    ctx.quadraticCurveTo(0, 12, 8, -2);
+    ctx.quadraticCurveTo(0, 2, -8, -2);
+    ctx.fill();
+  } else {
+    // Draw circle
+    ctx.fillStyle = "white";
+    ctx.beginPath();
+    ctx.arc(0, 0, 6, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  // Restore transformation
+  ctx.restore();
+
+  // Indicator showing if the bomb is above the screen
+  if (state.bomb.y > window.innerHeight / state.scale) {
+    ctx.beginPath();
+    ctx.strokeStyle = "white";
+    const distance = state.bomb.y - window.innerHeight / state.scale;
+    ctx.moveTo(state.bomb.x, window.innerHeight / state.scale - 10);
+    ctx.lineTo(state.bomb.x, window.innerHeight / state.scale - distance);
+    ctx.moveTo(state.bomb.x, window.innerHeight / state.scale - 10);
+    ctx.lineTo(state.bomb.x - 5, window.innerHeight / state.scale - 15);
+    ctx.moveTo(state.bomb.x, window.innerHeight / state.scale - 10);
+    ctx.lineTo(state.bomb.x + 5, window.innerHeight / state.scale - 15);
+    ctx.stroke();
+  }
+
+  // Indicator showing the starting position of the bomb
+  if (state.bomb.highlight) {
+    ctx.beginPath();
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = 2;
+    ctx.moveTo(state.bomb.x, state.bomb.y + 20);
+    ctx.lineTo(state.bomb.x, state.bomb.y + 120);
+    ctx.moveTo(state.bomb.x, state.bomb.y + 20);
+    ctx.lineTo(state.bomb.x - 5, state.bomb.y + 25);
+    ctx.moveTo(state.bomb.x, state.bomb.y + 20);
+    ctx.lineTo(state.bomb.x + 5, state.bomb.y + 25);
+    ctx.stroke();
+  }
+}
