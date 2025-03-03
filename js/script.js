@@ -684,3 +684,14 @@ function drawBomb() {
     ctx.stroke();
   }
 }
+
+// Event handlers
+bombGrabAreaDOM.addEventListener("mousedown", function (e) {
+  hideInstructions();
+  if (state.phase === "aiming") {
+    isDragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    document.body.style.cursor = "grabbing";
+  }
+});
