@@ -695,3 +695,16 @@ bombGrabAreaDOM.addEventListener("mousedown", function (e) {
     document.body.style.cursor = "grabbing";
   }
 });
+
+window.addEventListener("mousemove", function (e) {
+  if (isDragging) {
+    let deltaX = e.clientX - dragStartX;
+    let deltaY = e.clientY - dragStartY;
+
+    state.bomb.velocity.x = -deltaX;
+    state.bomb.velocity.y = deltaY;
+    setInfo(deltaX, deltaY);
+
+    draw();
+  }
+});
