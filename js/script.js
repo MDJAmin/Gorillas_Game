@@ -732,3 +732,19 @@ window.addEventListener("mouseup", function () {
     throwBomb();
   }
 });
+
+function computerThrow() {
+  const numberOfSimulations = 2 + state.round * 3;
+  const bestThrow = runSimulations(numberOfSimulations);
+
+  initializeBombPosition();
+  state.bomb.velocity.x = bestThrow.velocityX;
+  state.bomb.velocity.y = bestThrow.velocityY;
+  setInfo(bestThrow.velocityX, bestThrow.velocityY);
+
+  // Draw the aiming gorilla
+  draw();
+
+  // Make it look like the computer is thinking for a second
+  delayTimeoutID = setTimeout(throwBomb, 1000);
+}
