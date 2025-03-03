@@ -708,3 +708,18 @@ window.addEventListener("mousemove", function (e) {
     draw();
   }
 });
+
+// Set values on the info panel
+function setInfo(deltaX, deltaY) {
+  const hypotenuse = Math.sqrt(deltaX ** 2 + deltaY ** 2);
+  const angleInRadians = Math.asin(deltaY / hypotenuse);
+  const angleInDegrees = (angleInRadians / Math.PI) * 180;
+
+  if (state.currentPlayer === 1) {
+    angle1DOM.innerText = Math.round(angleInDegrees);
+    velocity1DOM.innerText = Math.round(hypotenuse);
+  } else {
+    angle2DOM.innerText = Math.round(angleInDegrees);
+    velocity2DOM.innerText = Math.round(hypotenuse);
+  }
+}
