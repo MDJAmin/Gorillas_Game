@@ -723,3 +723,12 @@ function setInfo(deltaX, deltaY) {
     velocity2DOM.innerText = Math.round(hypotenuse);
   }
 }
+
+window.addEventListener("mouseup", function () {
+  if (isDragging) {
+    isDragging = false;
+    document.body.style.cursor = "default";
+
+    throwBomb();
+  }
+});
