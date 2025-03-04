@@ -880,3 +880,21 @@ function animate(timestamp) {
     animationFrameRequestID = requestAnimationFrame(animate);
   }
 }
+
+function moveBomb(elapsedTime) {
+  const multiplier = elapsedTime / 200;
+
+  // Adjust trajectory by wind
+  state.bomb.velocity.x += state.windSpeed * multiplier;
+
+  // Adjust trajectory by gravity
+  state.bomb.velocity.y -= 20 * multiplier;
+
+  // Calculate new position
+  state.bomb.x += state.bomb.velocity.x * multiplier;
+  state.bomb.y += state.bomb.velocity.y * multiplier;
+
+  // Rotate according to the direction
+  const direction = state.currentPlayer === 1 ? -1 : +1;
+  state.bomb.rotation += direction * 5 * multiplier;
+}
