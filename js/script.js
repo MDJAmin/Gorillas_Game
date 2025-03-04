@@ -797,3 +797,24 @@ function runSimulations(numberOfSimulations) {
   simulationMode = false;
   return bestThrow;
 }
+
+function throwBomb() {
+  if (simulationMode) {
+    previousAnimationTimestamp = 0;
+    animate(16);
+  } else {
+    state.phase = "in flight";
+    previousAnimationTimestamp = undefined;
+    animationFrameRequestID = requestAnimationFrame(animate);
+  }
+}
+function throwBomb() {
+  if (simulationMode) {
+    previousAnimationTimestamp = 0;
+    animate(16);
+  } else {
+    state.phase = "in flight";
+    previousAnimationTimestamp = undefined;
+    animationFrameRequestID = requestAnimationFrame(animate);
+  }
+}
