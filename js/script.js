@@ -748,3 +748,52 @@ function computerThrow() {
   // Make it look like the computer is thinking for a second
   delayTimeoutID = setTimeout(throwBomb, 1000);
 }
+// Simulate multiple throws and pick the best
+function runSimulations(numberOfSimulations) {
+  let bestThrow = {
+    velocityX: undefined,
+    velocityY: undefined,
+    distance: Infinity,
+  };
+  simulationMode = true;
+
+  // Calculating the center position of the enemy
+  const enemyBuilding =
+    state.currentPlayer === 1
+      ? state.buildings.at(-2) // Second last building
+      : state.buildings.at(1); // Second building
+  const enemyX = enemyBuilding.x + enemyBuilding.width / 2;
+  const enemyY = enemyBuilding.height + 30;
+
+  for (let i = 0; i < numberOfSimulations; i++) {
+    // Pick a random angle and velocity
+    const angleInDegrees = -10 + Math.random() * 100;
+    const angleInRadians = (angleInDegrees / 180) * Math.PI;
+    const velocity = 40 + Math.random() * 130;
+
+    // Calculate the horizontal and vertical velocity
+    const direction = state.currentPlayer === 1 ? 1 : -1;
+    const velocityX = Math.cos(angleInRadians) * velocity * direction;
+    const velocityY = Math.sin(angleInRadians) * velocity;
+
+    initializeBombPosition();
+    state.bomb.velocity.x = velocityX;
+    state.bomb.velocity.y = velocityY;
+
+    throwBomb();
+
+    // Calculating the distance between the simulated impact and the enemy
+    const distance = Math.sqrt(
+      (enemyX - simulationImpact.x) ** 2 + (enemyY - simulationImpact.y) ** 2
+    );
+
+    // If the current impact is closer to the enemy
+    // than any of the previous simulations then pick this one
+    if (distance < bestThrow.distance) {
+      bestThrow = { velocityX, velocityY, distance };
+    }
+  }
+
+  simulationMode = false;
+  return bestThrow;
+}
