@@ -898,3 +898,14 @@ function moveBomb(elapsedTime) {
   const direction = state.currentPlayer === 1 ? -1 : +1;
   state.bomb.rotation += direction * 5 * multiplier;
 }
+
+function checkFrameHit() {
+  // Stop throw animation once the bomb gets out of the left, bottom, or right edge of the screen
+  if (
+    state.bomb.y < 0 ||
+    state.bomb.x < -state.shift / state.scale ||
+    state.bomb.x > (window.innerWidth - state.shift) / state.scale
+  ) {
+    return true; // The bomb is off-screen
+  }
+}
