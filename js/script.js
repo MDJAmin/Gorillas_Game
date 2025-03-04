@@ -818,3 +818,65 @@ function throwBomb() {
     animationFrameRequestID = requestAnimationFrame(animate);
   }
 }
+
+function animate(timestamp) {
+  if (previousAnimationTimestamp === undefined) {
+    previousAnimationTimestamp = timestamp;
+    animationFrameRequestID = requestAnimationFrame(animate);
+    return;
+  }
+
+  const elapsedTime = timestamp - previousAnimationTimestamp;
+
+  // We break down every animation cycle into 10 tiny movements for greater hit detection precision
+  const hitDetectionPrecision = 10;
+  for (let i = 0; i < hitDetectionPrecision; i++) {
+    moveBomb(elapsedTime / hitDetectionPrecision);
+
+    // Hit detection
+    const miss = checkFrameHit() || checkBuildingHit(); // Bomb got off-screen or hit a building
+    const hit = checkGorillaHit(); // Bomb hit the enemy
+
+    if (simulationMode && (hit || miss)) {
+      simulationImpact = { x: state.bomb.x, y: state.bomb.y };
+      return; // Simulation ended, return from the loop
+    }
+
+    // Handle the case when we hit a building or the bomb got off-screen
+    if (miss) {
+      state.currentPlayer = state.currentPlayer === 1 ? 2 : 1; // Switch players
+      if (state.currentPlayer === 1) state.round++;
+      state.phase = "aiming";
+      initializeBombPosition();
+
+      draw();
+
+      const computerThrowsNext =
+        settings.numberOfPlayers === 0 ||
+        (settings.numberOfPlayers === 1 && state.currentPlayer === 2);
+
+      if (computerThrowsNext) setTimeout(computerThrow, 50);
+
+      return;
+    }
+
+    // Handle the case when we hit the enemy
+    if (hit) {
+      state.phase = "celebrating";
+      announceWinner();
+
+      draw();
+      return;
+    }
+  }
+
+  if (!simulationMode) draw();
+
+  // Continue the animation loop
+  previousAnimationTimestamp = timestamp;
+  if (simulationMode) {
+    animate(timestamp + 16);
+  } else {
+    animationFrameRequestID = requestAnimationFrame(animate);
+  }
+}
