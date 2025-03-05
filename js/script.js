@@ -970,3 +970,16 @@ function checkGorillaHit() {
 
   return hit;
 }
+
+function announceWinner() {
+  if (settings.numberOfPlayers === 0) {
+    winnerDOM.innerText = `Computer ${state.currentPlayer}`;
+  } else if (settings.numberOfPlayers === 1 && state.currentPlayer === 1) {
+    winnerDOM.innerText = `You`;
+  } else if (settings.numberOfPlayers === 1 && state.currentPlayer === 2) {
+    winnerDOM.innerText = `Computer`;
+  } else {
+    winnerDOM.innerText = `Player ${state.currentPlayer}`;
+  }
+  showCongratulations();
+}
