@@ -983,3 +983,14 @@ function announceWinner() {
   }
   showCongratulations();
 }
+
+singlePlayerButtonDOM.forEach((button) =>
+  button.addEventListener("click", () => {
+    settings.numberOfPlayers = 1;
+    gameModeDOM.innerHTML = "Player vs. Computer";
+    name1DOM.innerText = "Player";
+    name2DOM.innerText = "Computer";
+
+    newGame();
+  })
+);
