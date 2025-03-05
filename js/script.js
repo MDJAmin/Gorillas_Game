@@ -942,3 +942,31 @@ function checkBuildingHit() {
     }
   }
 }
+
+function checkGorillaHit() {
+  const enemyPlayer = state.currentPlayer === 1 ? 2 : 1;
+  const enemyBuilding =
+    enemyPlayer === 1
+      ? state.buildings.at(1) // Second building
+      : state.buildings.at(-2); // Second last building
+
+  ctx.save();
+
+  ctx.translate(
+    enemyBuilding.x + enemyBuilding.width / 2,
+    enemyBuilding.height
+  );
+
+  drawGorillaBody();
+  let hit = ctx.isPointInPath(state.bomb.x, state.bomb.y);
+
+  drawGorillaLeftArm(enemyPlayer);
+  hit ||= ctx.isPointInStroke(state.bomb.x, state.bomb.y);
+
+  drawGorillaRightArm(enemyPlayer);
+  hit ||= ctx.isPointInStroke(state.bomb.x, state.bomb.y);
+
+  ctx.restore();
+
+  return hit;
+}
