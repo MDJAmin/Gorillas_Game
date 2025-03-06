@@ -1020,6 +1020,7 @@ function generateWindSpeed() {
   // Generate a random number between -10 and +10
   return -10 + Math.random() * 20;
 }
+
 function setWindMillRotation() {
   const rotationSpeed = Math.abs(50 / state.windSpeed);
   windmillHeadDOM.style.animationDirection =
@@ -1028,3 +1029,9 @@ function setWindMillRotation() {
 
   windSpeedDOM.innerText = Math.round(state.windSpeed);
 }
+
+window.addEventListener("mousemove", function (e) {
+  settingsDOM.style.opacity = 1;
+  info1DOM.style.opacity = 1;
+  info2DOM.style.opacity = 1;
+});
