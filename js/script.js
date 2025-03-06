@@ -1015,3 +1015,8 @@ autoPlayButtonDOM.forEach((button) =>
     newGame();
   })
 );
+
+function generateWindSpeed() {
+  // Generate a random number between -10 and +10
+  return -10 + Math.random() * 20;
+}
