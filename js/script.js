@@ -18,13 +18,13 @@ let simulationImpact = {};
 
 // Settings
 const settings = {
-    numberOfPlayers: 1,
-    // if value of numberOfPlayers is 0 it mean that two computers are playing against each other
-    mode: "light",
-  };
+  numberOfPlayers: 1,
+  // if value of numberOfPlayers is 0 it mean that two computers are playing against each other
+  mode: "light",
+};
 
 
-  const blastHoleRadius = 18;
+const blastHoleRadius = 18;
 
 // The main canvas element and its draw context
 const canvas = document.querySelector("#game");
@@ -268,9 +268,9 @@ window.addEventListener("resize", () => {
 function initializeBombPosition() {
   const building =
     state.currentPlayer === 1
-      ? state.buildings.at(1) 
-      : state.buildings.at(-2); 
-      
+      ? state.buildings.at(1)
+      : state.buildings.at(-2);
+
   const gorillaX = building.x + building.width / 2;
   const gorillaY = building.height;
 
